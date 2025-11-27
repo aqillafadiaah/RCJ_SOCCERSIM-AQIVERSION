@@ -6,49 +6,78 @@ repository provides both the "automatic referee" (which implements the [Soccer
 Simulated Rules](https://github.com/robocup-junior/soccer-rules-simulation))
 as well as a sample simulated team of robots with some basic strategy.
 
-![Soccer Sim](./docs/docs/images/soccer_sim.png)
-
 *Learn more in the [documentation](https://robocup-junior.github.io/rcj-soccersim/).*
 
 # How do I try this out?
 
 ## Installation
 
-The first thing you need to prepare is installing Python. Go to https://www.python.org/downloads/
- and download the latest version for your system.
+1. The first thing you need to prepare is installing Python. Go to https://www.python.org/downloads/ and download the latest version for your system.
 
-Next, download the Soccer Simulator. You can get it from https://github.com/robocup-junior/rcj-soccersim.git
- or from the revised version provided to you. After opening the page, click the Code button and select Download ZIP.
+2. Next, download the Soccer Simulator. You can get it from https://github.com/robocup-junior/rcj-soccersim.git or from the revised version provided to you. After opening the page, click the Code button and select Download ZIP.
 
-If you prefer not to extract a ZIP file, you can download the project directly through the terminal or command prompt using the following command. Wait a moment until all files finish downloading.
+3. If you prefer not to extract a ZIP file, you can download the project directly through the terminal or command prompt using the following command. Wait a moment until all files finish downloading.
 
-If you downloaded the ZIP file from the website, extract it.
+4. If you downloaded the ZIP file from the website, extract it.
 
-Before opening Webots, make sure you have all the required files prepared properly.
+5. Before opening Webots, make sure you have all the required files prepared properly.
 
-The next step is optional, but recommended if you plan to edit the code or contribute to this repository. This keeps the project organized. Open the terminal or command prompt and run the command shown below.
+6. The next step is optional, but recommended if you plan to edit the code or contribute to this repository. This keeps the project organized. Open the terminal or command prompt and run the command shown below.
+   Langkah 1
+   cd rcj-soccersim
+   
+   Langkah 2
+   python3 -m venv venv
+   
+   Langkah 3
+   source venv/bin/activate
+   
+   Langkah 4
+   pip install pip-tools atau pip3 install pip-tools
+   
+   Langkah 5
+   pip-sync requirements/development.txt
+   
+   Langkah 6
+pre-commit install
 
-After that, open Webots. Go to File > Open World, navigate to the worlds folder, and select soccer.wbt.
+7. After that, open Webots. Go to File > Open World, navigate to the worlds folder, and select soccer.wbt.
 
-Once loaded, you’ll see the soccer field, six differential-drive robots (two teams with three robots each), both goals, and the arena boundaries.
+8. Once loaded, you’ll see the soccer field, six differential-drive robots (two teams with three robots each), both goals, and the arena boundaries.
 
-Set the starting formation for your match strategy. In this example, we use a 2–1 formation: B1 and Y1 as strikers, B2 and Y2 as midfielders, and B3 and Y3 as goalkeepers.
+9. Set the starting formation for your match strategy. In this example, we use a 2–1 formation: B1 and Y1 as strikers, B2 and Y2 as midfielders, and B3 and Y3 as goalkeepers.
 
-Open the Scene Tree panel on the left. This panel contains all robot and arena configurations. Adjust the translation and rotation of each robot to position them according to the 2–1 formation. Leave the ball unchanged.
+10. Open the Scene Tree panel on the left. This panel contains all robot and arena configurations. Adjust the translation and rotation of each robot to position them according to the 2–1 formation. Leave the ball unchanged.
+    Robot Configuration
+ 
+    Robot; translasi (x), (y), (z) ; rotasi (x), (y), (z), (angle)
+    B1   ; translasi (0.25), (0.25), (0.042) ; rotasi (0), (0), (-1), (1.57)
+    B2   ; translasi (-0.25), (0.25), (0.042) ; rotasi (0), (0), (-1), (1.57)
+    B3   ; translasi (0), (0.75), (0.042) ; rotasi (0), (0), (1), (0)
+    
+    Y1   ; translasi (-0.25), (-0.25), (0.042) ; rotasi (0), (0), (1), (1.57)
+    Y2   ; translasi (0.25), (-0.25), (0.042) ; rotasi (0), (0), (1), (1.57)
+    Y3   ; translasi (0), (-0.75), (0.042) ; rotasi (0), (0), (1), (0)
+    
+    Still in the Scene Tree, check the controller assigned to each robot.
+     • Blue team uses rcj_soccer_team_blue.py
+     • Yellow team uses rcj_soccer_team_yellow.py
+     • The ball uses rcj_soccer_ball.py
+     • The referee supervisor (listed as a robot in the Scene Tree) uses rcj_soccer_referee_supervisor.py
 
-Still in the Scene Tree, check the controller assigned to each robot.
-• Blue team uses rcj_soccer_team_blue.py
-• Yellow team uses rcj_soccer_team_yellow.py
-• The ball uses rcj_soccer_ball.py
-• The referee supervisor (listed as a robot in the Scene Tree) uses rcj_soccer_referee_supervisor.py
+11. If you need additional Python libraries, such as pandas, math, or OpenCV, open the terminal and install them with a command like this:
+    Langkah 1
+    cd rcj-soccersim
+    
+    Langkah 2
+    $ pip-compile -o requirements/development.txt requirements/development.in
 
-If you need additional Python libraries, such as pandas, math, or OpenCV, open the terminal and install them with a command like this:
+12. Run the simulation by pressing the Play button.
 
-Run the simulation by pressing the Play button.
+13. To record a match, go to File > Make Movie. Wait until the match finishes to complete the recording.
 
-To record a match, go to File > Make Movie. Wait until the match finishes to complete the recording.
+14. To view the match history, open Visual Studio Code, select Open Folder, choose the rcj-soccersim folder, then navigate to controllers/rcj_soccer_referee_supervisor. Inside the reflog folder, you’ll find all recorded match logs.
 
-To view the match history, open Visual Studio Code, select Open Folder, choose the rcj-soccersim folder, then navigate to controllers/rcj_soccer_referee_supervisor. Inside the reflog folder, you’ll find all recorded match logs.
 ## Development
 
 We are open to contributions! Have a look at our [issues](https://github.com/robocup-junior/rcj-soccersim/issues).
